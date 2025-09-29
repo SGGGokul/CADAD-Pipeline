@@ -13,11 +13,11 @@ jobs:
     steps:
       # Step 1: Checkout code
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # Step 2: Set up Java (you can change version)
+      # Step 2: Set up Java (you can change version if needed)
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -30,9 +30,9 @@ jobs:
       - name: Run tests
         run: mvn test
 
-      # Step 5: Upload artifact (optional)
+      # Step 5: Upload artifact
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: java-app
           path: target/*.jar
@@ -44,9 +44,9 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # Example deployment to remote server via SSH (replace with your needs)
+      # Example deployment to remote server via SSH
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.0.0
         with:
