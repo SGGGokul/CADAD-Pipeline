@@ -1,39 +1,23 @@
-name: Simple CI/CD Pipeline
+name: Deploy Website
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "main" ]   # Deploy whenever you push to main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run build step
-        run: echo "Building project..."
-
-      - name: Run tests
-        run: echo "Running tests..."
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: dummy-artifact
-          path: README.md   # just uploads README as an example
+          path: ./website   # change this to your website folder
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Deploy step
-        run: echo "Deploying project..."
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
