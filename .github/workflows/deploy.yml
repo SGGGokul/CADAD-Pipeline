@@ -2,22 +2,30 @@ name: Deploy Website
 
 on:
   push:
-    branches: [ "main" ]   # Deploy whenever you push to main
+    branches: [ "main" ] # Deploy whenever you push to main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    
+    # 🌟 CRITICAL FIX: ADD THE PERMISSIONS BLOCK 🌟
+    permissions:
+      contents: read     # Required for actions/checkout@v4
+      pages: write       # Required for deploying to GitHub Pages
+      id-token: write    # Required for the deploy-pages action's authentication
+      
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
+        
       - name: Setup Pages
         uses: actions/configure-pages@v5
-
+        
       - name: Upload artifact
+        # The path needs to be absolute or relative to the workspace root
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./website   # Folder containing your website
-
+          path: ./website # Folder containing your website
+          
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
